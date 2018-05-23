@@ -9,8 +9,38 @@
   <meta name="keyword" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title><%= htmlWebpackPlugin.options.title %></title>
+
+  <link rel="stylesheet" href="/sheet1.css">
+  <link rel="stylesheet" href="/sheet4.css">
+  <script>
+    performance.mark("stylesheets done blocking");
+  </script>
+  <script>
+    !(function() {
+      if ('PerformanceLongTaskTiming' in window) {
+        var g = (window.__tti = { e: [] });
+        g.o = new PerformanceObserver(function(l) {
+          g.e = g.e.concat(l.getEntries());
+        });
+        g.o.observe({ entryTypes: ['longtask'] });
+      }
+    })();
+  </script>
+
 </head>
 <body>
   <div id="app"></div>
+
+  <img src="hero.jpg" onload="performance.clearMarks('img displayed'); performance.mark('img displayed');">
+  <script>
+    performance.clearMarks("img displayed");
+    performance.mark("img displayed");
+  </script>
+
+  <p>This is the call to action text element.</p>
+  <script>
+    performance.mark("text displayed");
+  </script>
+
 </body>
 </html>
